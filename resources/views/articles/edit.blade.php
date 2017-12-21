@@ -31,7 +31,6 @@
 
         </div>
 
-
         <div class="form-group">
 
             <label for="body">Body</label>

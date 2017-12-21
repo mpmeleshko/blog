@@ -30,11 +30,17 @@
 
         @endif
 
-        <div>
 
-             <img src="{{ URL::asset( $article->image ) }}"  class="img-rounded" height="70%" width="70%">
+        @if ($article->image)
 
-        </div>
+            <div>
+
+                <img src="{{ URL::asset( $article->image ) }}" class="img-rounded" height="70%" width="70%">
+
+            </div>
+
+        @endif
+
 
         <div class="body">
 

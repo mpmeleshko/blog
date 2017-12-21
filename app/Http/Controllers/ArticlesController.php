@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Article;
 
+use App\Http\Requests\ArticlesRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
@@ -28,9 +29,7 @@ class ArticlesController extends Controller
     {
 
         $articles = Article::latest()
-
             ->filter(request()->only(['month', 'year']))
-
             ->get();
 
 
@@ -38,7 +37,7 @@ class ArticlesController extends Controller
 
     }
 
-    
+
     public function show($id)
 
     {
@@ -46,39 +45,22 @@ class ArticlesController extends Controller
         $article = Article::findOrFail($id);
 
         return view('articles.show', compact('article'));
-        
+
     }
 
-    
+
     public function create()
 
     {
-        
+
         return view('articles.create');
-        
+
     }
 
-    
-    public function store()
+
+    public function store(ArticlesRequest $request)
 
     {
-
-        $this->validate(request(), [
-
-            'title' => 'required',
-
-            'body' => 'required',
-
-
-        ]);
-
-
-        $file = request()->file('image');
-
-        $filename = $file->getClientOriginalName();
-
-        $file->move('images', $filename);//папка для загрузки изображения
-
 
         $article = Article::create([
 
@@ -91,13 +73,24 @@ class ArticlesController extends Controller
         ]);
 
 
-        if ($filename) {
+        if (request()->hasFile('image')) {
 
-            $artic = Article::find($article->id);
+            $file = request()->file('image');
 
-            $artic->image = '/images/' . $filename;
+            $filename = $file->getClientOriginalName();
 
-            $artic->save();
+            $file->move('images', $filename);//папка для загрузки изображения
+
+
+            if ($filename) {
+
+                $artic = Article::find($article->id);
+
+                $artic->image = '/images/' . $filename;
+
+                $artic->save();
+            }
+
         }
 
 
@@ -117,19 +110,9 @@ class ArticlesController extends Controller
     }
 
 
-    public function update($id)
+    public function update(ArticlesRequest $request, $id)
 
     {
-
-
-        $this->validate(request(), [
-
-            'title' => 'required',
-
-            'body' => 'required'
-
-        ]);
-
 
         $article = Article::find($id);
 
