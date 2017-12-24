@@ -153,6 +153,9 @@ h6,
   color: #999;
 }
 
+.favorites {
+  text-align: right;
+}
 
 /*
  * Footer

@@ -4,7 +4,7 @@
 
 @section('header')
 
-    My Articles
+    Articles
 
 @stop
 
@@ -13,6 +13,9 @@
 
 
     @foreach ($articles as $article)
+
+
+        {{ $article->check_article($article) }}
 
         <div class="blog-post">
 
@@ -35,8 +38,37 @@
 
             <div class="body">{{ $article->body }}</div>
 
+            <hr/>
+            <div class="favorites">
 
+                @if (! $article->isFavorited())
+                    <form method="POST" action="article/{{ $article->id }}/favorites">
+
+                        {{ csrf_field() }}
+
+                        <button type="submit" class="btn btn-default">
+                            {{ $article->favorites()->count() }} Like
+                        </button>
+
+                    </form>
+                @endif
+
+                @if ($article->isFavorited())
+                    <form method="POST" action="article/{{ $article->id }}/unfavorites">
+
+                        {{ csrf_field() }}
+
+                        <button type="submit" class="btn btn-danger">
+                            {{ $article->favorites()->count() }} Like
+                        </button>
+
+                    </form>
+                @endif
+
+            </div>
+            <hr/>
         </div><!-- /.blog-post -->
+
 
 
     @endforeach

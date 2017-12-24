@@ -31,17 +31,11 @@ class SessionsController extends Controller
     {
 
         // Try to authenticate the user. If not, redirect back.  If yes, sing in
-
         if (! auth()->attempt(request(['email', 'password']))) {
-
             return back()->withErrors([
-
                 'message' => 'Please check your data and try again.'
-
             ]);
-
         }
-
 
         return redirect('/');
 
