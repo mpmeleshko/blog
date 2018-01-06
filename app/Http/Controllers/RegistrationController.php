@@ -37,7 +37,7 @@ class RegistrationController extends Controller
         // Sign user in
         auth()->login($user);
 
-        \Mail::to($user)->send(new Welcome($user));
+        //\Mail::to($user)->send(new Welcome($user));
 
 
         // Redirect to the home page
