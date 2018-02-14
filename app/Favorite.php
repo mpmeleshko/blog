@@ -13,12 +13,8 @@ class Favorite extends Model
 
     protected $guarded = [];
 
-
     public function favoreted()
-
     {
-
         return $this->morphTo();
-
     }
 }
