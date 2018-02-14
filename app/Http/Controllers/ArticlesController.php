@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Article;
-
 use App\Favorite;
 use App\Http\Requests\ArticlesRequest;
 use Carbon\Carbon;
